@@ -6,24 +6,31 @@ import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Navigate } from "react-router-dom";
 
-export default function Dashboard({ navigation: { navigate } }) {
+export default function Dashboard({ navigation: navigate  }) {
   const [text, setText] = useState("");
 
  function selectedItem(person)
  {
-  console.log("called")
-  navigate("ListAItem",{navigate:navigate})
+  console.log("called",person)
+  navigate.navigate("ListAItem",{selectedItem:person})
  }
 
   const persons = [
     {
       id: "1",
-      name: "Earnest Green",
+      name: "Earnestaaa Green",
       description:
         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
       image: require("../assets/food.png"),
       views: 5,
-      price: "Paid",
+      priceStatus: "Paid",
+      price:"56.33",
+      actualPrice:"100",
+      quantity:3,
+      interested:7,
+      pickUpTime : "4 pm today",
+      location:{ latitude: 12.33,
+        longitude: 12.44,}
     },
     {
       id: "2",
@@ -34,7 +41,14 @@ export default function Dashboard({ navigation: { navigate } }) {
         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
       image: require("../assets/food.png"),
       views: 5,
-      price: "Paid",
+      priceStatus: "Paid",
+      price:"56.33",
+      actualPrice:"100",
+      interested:7,
+      quantity:3,
+      pickUpTime : "4 pm today",
+      location:{ latitude: 12.33,
+        longitude: 12.44,}
     },
     {
       id: "3",
@@ -45,7 +59,14 @@ export default function Dashboard({ navigation: { navigate } }) {
         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
       image: require("../assets/food.png"),
       views: 5,
-      price: "Free",
+      priceStatus: "Free",
+      price:"56.33",
+      actualPrice:"100",
+      interested:7,
+      quantity:3,
+      pickUpTime : "4 pm today",
+      location:{ latitude: 12.33,
+        longitude: 12.44,}
     },
     {
       id: "4",
@@ -55,6 +76,10 @@ export default function Dashboard({ navigation: { navigate } }) {
       image: require("../assets/food.png"),
       views: 5,
       price: "Paid",
+      pickUpTime : "4 pm today",
+      interested:7,
+      location:{ latitude: 12.33,
+        longitude: 12.44,}
     },
     {
       id: "5",
@@ -64,6 +89,9 @@ export default function Dashboard({ navigation: { navigate } }) {
       image: require("../assets/food.png"),
       views: 5,
       price: "Free",
+      pickUpTime : "4 pm today",
+      interested:7,
+
     },
     {
       id: "6",
@@ -169,7 +197,14 @@ export default function Dashboard({ navigation: { navigate } }) {
                     <Image style={styles.image} source={person.image} />
                   </View>
                   <View style={styles.productDesc}>
+                    <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                     <Text style={{ fontWeight: 700 }}> {person.name}</Text>
+                    <View style={styles.pricee}>
+                        <Text style={person.priceStatus == "Free" ? styles.Free : ""}>
+                          {person.priceStatus == "Free" ? person.priceStatus : ""}
+                        </Text>
+                      </View>
+                      </View>
                     <View style={styles.desc}>
                       <View style={styles.views}>
                         <Image
@@ -182,13 +217,18 @@ export default function Dashboard({ navigation: { navigate } }) {
                         <Text style={{ fontSize: 10, color: "grey" }}>
                           Quantity :
                         </Text>
-                        <Text> {person.views}</Text>
+                        <Text> {person.quantity}</Text>
                       </View>
-                      <View style={styles.pricee}>
-                        <Text style={person.price == "Free" ? styles.Free : ""}>
-                          {person.price == "Free" ? person.price : ""}
-                        </Text>
+                      {person.interested ?
+                      <View style={styles.views}>
+                        <Image
+                          source={require("../assets/heart.png")}
+                          style={{ width: 20, height: 20 }}
+                        />
+                        <Text> {person.interested}</Text>
                       </View>
+                      :""
+                   }
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -278,8 +318,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   pricee: {
-    textAlignVertical: "center",
-
+    textAlignVertical: "top",
+   
     //  marginTop:15,
 
     // backgroundColor:"red"
